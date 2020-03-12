@@ -61,20 +61,18 @@ jobs:
 #        
     - name: 组织文件
       run: |
-        mkdir -p upload/
-	mv v19.07.2.tar.gz upload/
-#        cp openwrt-19.07.2/.config upload/
-#        mv openwrt-19.07.2/bin/targets/*/*/* upload/
-      - name: 创建Release仓库
-        id: create_release
-        uses: monkeyWie/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+       mkdir -p upload/
+       mv v19.07.2.tar.gz upload/
+    - name: 创建Release仓库
+    id: create_release
+    uses: monkeyWie/create-release@master
+     env:
+     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     with:
+     tag_name: ${{ github.ref }}
+     release_name: Release ${{ github.ref }}
+     draft: false
+     prerelease: false
     - name: 推送到Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
