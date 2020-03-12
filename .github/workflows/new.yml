@@ -2,14 +2,12 @@ name: OpenWrt固件编译
 on:
   watch:
     types: started
-
 jobs:
   build:
     name: demo
     runs-on: ubuntu-18.04
     env:
       VERSION: 19.07.2
-      UPLOAD_RELEASE: true
       URL: https://github.com/openwrt/openwrt/archive/v19.07.2.tar.gz
     steps:
     - name: 下载和创建
@@ -19,18 +17,6 @@ jobs:
         wget $URL
         echo "ddddddddddddddd">22.txt
         echo ${{ github.sha }} > Release.txt
-#    - name: Create Release
-#      id: create_release
-#      uses: actions/create-release@latest
-#      env:
-#       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      with:
-#       tag_name: ${{ env.VERSION }}
-#       release_name: Release ${{ env.VERSION }}
-#       body: |
-#        修改了什么？
-#       draft: false
-#       prerelease: false
     - name: Generate tag
       run: |
         echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
@@ -39,14 +25,11 @@ jobs:
     - name: Create release
       uses: softprops/action-gh-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.RElEASE_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
        tag_name: ${{ env.RELEASE_TAG }}
        body: build OpenWrt | 编译OpenWrt
     - name: Upload to release
       uses: softprops/action-gh-release@v1
-      if: env.UPLOAD_RELEASE == 'true' && startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.RElEASE_TOKEN }}
-      with:
-       files: ok/**
