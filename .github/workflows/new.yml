@@ -17,19 +17,23 @@ jobs:
     - name: 组织文件
       run: |
         mkdir -p upload/
-        - name: Create Release
-        id: create_release
-        uses: monkeyWie/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-          - name: Upload Release normal windows
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: upload/**
+    - name: Checkout code
+      uses: actions/checkout@master
+    - name: Create Release
+      id: create_release
+      uses: monkeyWie/create-release@master
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+       tag_name: ${{ github.ref }}
+       release_name: Release ${{ github.ref }}
+       draft: false
+       prerelease: false
+    - name: Checkout code
+      uses: actions/checkout@master
+    - name: Upload Release normal windows
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+       files: upload/**
