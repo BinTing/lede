@@ -13,13 +13,6 @@ jobs:
     - name: 下载
       run: |
         wget $URL
-        tar -zxf v19.07.2.tar.gz        
-    - name: 组织文件
-      run: |
-        mkdir -p upload/
-        mv v19.07.2.tar.gz upload/
-    - name: Checkout code
-      uses: actions/checkout@master
     - name: Create Release
       id: create_release
       uses: monkeyWie/create-release@master
@@ -30,11 +23,12 @@ jobs:
        release_name: Release ${{ github.ref }}
        draft: false
        prerelease: false
-    - name: Checkout code
-      uses: actions/checkout@master
     - name: Upload Release normal windows
       uses: actions/upload-release-asset@v1.0.1
       env:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       files: upload/**
+       upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+       asset_path: ./v19.07.2.tar.gz
+       asset_name: normal-${{ steps.create_release.outputs.tag }}-windows-x64.zip
+       asset_content_type: application/zip
