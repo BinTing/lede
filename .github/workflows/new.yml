@@ -15,10 +15,11 @@ jobs:
       id: create_release
       uses: monkeyWie/create-release@master
       env:
+       VERSION: v1.0
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       tag_name: 20200303
-       release_name: Release ${{ tag_name }}
+       tag_name: ${{ env.VERSION }}
+       release_name: Release ${{ env.VERSION }}
        draft: false
        prerelease: false
     - name: Upload Release normal windows
