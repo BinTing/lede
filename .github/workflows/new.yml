@@ -17,6 +17,7 @@ jobs:
     - name: 组织文件
       run: |
         mkdir -p upload/
+        mv v19.07.2.tar.gz upload/
     - name: Checkout code
       uses: actions/checkout@master
     - name: Create Release
