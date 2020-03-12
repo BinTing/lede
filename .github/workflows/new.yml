@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-  name: demo
+    name: demo
     runs-on: ubuntu-18.04
     env:
       VERSION: 19.07.2
