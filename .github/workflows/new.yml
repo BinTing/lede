@@ -5,12 +5,13 @@ on:
 
 jobs:
   build:
+  name: demo
     runs-on: ubuntu-18.04
     env:
       VERSION: 19.07.2
       URL: https://github.com/openwrt/openwrt/archive/v19.07.2.tar.gz
     steps:
-    - name: 下载
+    - name: 下载和创建
       run: |
         mkdir ok
         cd ok
@@ -18,17 +19,21 @@ jobs:
         echo "ddddddddddddddd">22.txt
     - name: Create Release
       id: create_release
-      uses: monkeyWie/create-release@master
+      uses: actions/create-release@latest
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
        tag_name: ${{ env.VERSION }}
        release_name: Release ${{ env.VERSION }}
+       body: |
+        修改了什么？
        draft: false
        prerelease: false
-    - name: Upload Release normal windows
-      uses: actions/upload-release-asset@v1.0.1
+    - name: Upload Release
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       files: ok/**
+       upload_url: ${{ steps.create_release.outputs.upload_url }}
+       files: ok/*.*
