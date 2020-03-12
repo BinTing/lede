@@ -6,21 +6,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-18.04
-    env:
-      VERSION: 19.07.2
-      URL: https://github.com/openwrt/openwrt/archive/v19.07.2.tar.gz
     steps:
     - name: 下载
       run: |
         wget $URL
+        echo "ddddddddddddddd">22.txt
     - name: Create Release
       id: create_release
       uses: monkeyWie/create-release@master
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       tag_name: ${{ github.ref }}
-       release_name: Release ${{ github.ref }}
+       tag_name: 20200303
+       release_name: Release ${{ tag_name }}
        draft: false
        prerelease: false
     - name: Upload Release normal windows
@@ -28,7 +26,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-       asset_path: ./v19.07.2.tar.gz
-       asset_name: normal-${{ steps.create_release.outputs.tag }}-windows-x64.zip
-       asset_content_type: application/zip
+       files: ./**
