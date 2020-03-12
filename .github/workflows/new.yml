@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: 下载
       run: |
+        mkdir ok
+        cd ok
         wget $URL
         echo "ddddddddddddddd">22.txt
     - name: Create Release
@@ -29,4 +31,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       files: ./**
+       files: ok/**
