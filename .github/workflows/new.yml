@@ -38,13 +38,13 @@ jobs:
     - name: Create release
       uses: softprops/action-gh-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.RElEASE_TOKEN }}
       with:
        tag_name: ${{ env.RELEASE_TAG }}
        body: build OpenWrt | 编译OpenWrt
     - name: Upload to release
       uses: softprops/action-gh-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
       with:
        files: ok/**
